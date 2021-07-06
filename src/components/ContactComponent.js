@@ -3,6 +3,11 @@ import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
 import { Control, LocalForm, Errors } from "react-redux-form";
 
+const required = (val) => val && val.length; //click vao roi nhac chuot ra thi val ="true", khi khi length = 0 thi val.length = false
+const maxLength = (len) => (val) => !(val) || (val.length <= len); //o day chi la 2 dieu kien, chu khong chon dieu kien
+const minLength = (len) => (val) => (val) && (val.length  >= len); //o day chi la 2 dieu kien, chu khong chon dieu kien
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) => /^(A-Z0-9._%+-)+ @[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val); //ham i.test(val) => kiem tra nhap lieu da dung chua, neu sai pham vi quy dinh /..../ dang truoc se tra ve "!val" , neu dung la "val"
 class Contact extends Component {
 
     constructor(props) {
@@ -67,7 +72,18 @@ class Contact extends Component {
                             <Control.text model=".firstname" id="firstname" name="firstname"
                                 placeholder="First Name"
                                 className="form-control"
+                                validators = {{ //cai nao mang "true" se khong truy vet den Message nua
+                                    required, minLength: minLength(3), maxLength: maxLength(15)
+                                }}
                                  />
+                            <Errors className="text-danger"
+                            model=".firstname"
+                            show ="touched"
+                            messages ={{ //tat ca message duoi nay deu su dung bien tren validators, con validators thi su dung bien cua no va fetch function tu dau page
+                                required: 'Required', //required similar value, tuc la vua store and vua kiem tra xem co viet gi chua, sau khi thoat click, neu nhap data roi se tra ve "true", neu chua co data se tra ve false va message
+                                minLength: 'Must be greater than 2 characters',
+                                maxLength: 'Must be 15 characters or less'
+                            }} />
                         </Col>
                     </Row>
                     <Row className="form-group">
@@ -76,7 +92,18 @@ class Contact extends Component {
                             <Control.text model=".lastname" id="lastname" name="lastname"
                                 placeholder="Last Name"
                                 className="form-control"
+                                validators = {{
+                                    required, minLength: minLength(3), maxLength: maxLength(15) 
+                                }}
                                  />
+                            <Errors className="text-danger"
+                            model=".lastname"
+                            show ="touched"
+                            messages ={{ //tat ca message duoi nay deu su dung bien tren validators, con validators thi su dung bien cua no va fetch function tu dau page
+                                required: 'Required', //required similar value, tuc la vua store and vua kiem tra xem co viet gi chua, sau khi thoat click, neu nhap data roi se tra ve "true", neu chua co data se tra ve false va message
+                                minLength: 'Must be greater than 2 characters',
+                                maxLength: 'Must be 15 characters or less'
+                            }} />
                         </Col>
                     </Row>
                     <Row className="form-group">
@@ -85,7 +112,19 @@ class Contact extends Component {
                             <Control.text model=".telnum" id="telnum" name="telnum"
                                 placeholder="Tel. Number"
                                 className="form-control"
+                                validators = {{
+                                    required, minLength: minLength(9), maxLength: maxLength(13), isNumber
+                                }}
                                  />
+                            <Errors className="text-danger"
+                            model=".telnum"
+                            show ="touched"
+                            messages ={{ //tat ca message duoi nay deu su dung bien tren validators, con validators thi su dung bien cua no va fetch function tu dau page
+                                required: 'Required', //required similar value, tuc la vua store and vua kiem tra xem co viet gi chua, sau khi thoat click, neu nhap data roi se tra ve "true", neu chua co data se tra ve false va message
+                                minLength: 'Must be greater than 2 numbers',
+                                maxLength: 'Must be 15 numbers or less',
+                                isNumber: 'Must be a number'
+                            }} />
                         </Col>
                     </Row>
                     <Row className="form-group">
@@ -93,7 +132,18 @@ class Contact extends Component {
                         <Col md={10}>
                             <Control.text model=".email" id="email" name="email"
                                 placeholder="Email"
-                                className="form-control" />
+                                className="form-control" 
+                                validators = {{
+                                    required, validEmail
+                                }}
+                                />
+                            <Errors className="text-danger"
+                            model=".email"
+                            show ="touched"
+                            messages ={{ //tat ca message duoi nay deu su dung bien tren validators, con validators thi su dung bien cua no va fetch function tu dau page
+                                required: 'Required', //required similar value, tuc la vua store and vua kiem tra xem co viet gi chua, sau khi thoat click, neu nhap data roi se tra ve "true", neu chua co data se tra ve false va message
+                                validEmail: 'Invalid'
+                            }} />
                         </Col>
                     </Row>
                     <Row className="form-group">
