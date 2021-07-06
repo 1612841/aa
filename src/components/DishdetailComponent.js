@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
+import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
 
     function RenderDish({dish}) {
@@ -20,6 +21,7 @@ import { Link } from 'react-router-dom';
                 <div></div>
             );
     }
+    
     function RenderComments({com}){
         if (com != null) {
             const cmt = com.map((cmts)=>{ 
@@ -28,9 +30,9 @@ import { Link } from 'react-router-dom';
                 const cmtb =new Date(cmts.date.slice(0,10)).toString().slice(11,15); 
                 {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmts.date)))}*/
                 return(
-                    <div className="cmtgroupmap mt-3 mb-10">
+                    <div className="cmtgroupmap mt-4">
                          <quote>{cmta}</quote>
-                         <div className="m-1">
+                         <div className="m-2">
                             <cite>--  {cmts.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmts.date)))}</cite>
                          </div>
                     </div>
@@ -39,9 +41,14 @@ import { Link } from 'react-router-dom';
             })
             return(
                 <div className="comments">
-                    <h4>Comments</h4>
-                    <div className="cmtgroup">
-                        {cmt}
+                    <div className="commentsgroup" >
+                        <h4>Comments</h4>
+                        <div className="cmtgroup">
+                            {cmt}
+                        </div>
+                        <div className="cmtform">
+                            <CommentForm />
+                        </div>
                     </div>
                 </div>
             );

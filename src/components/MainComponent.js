@@ -8,6 +8,7 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const mapStateToProps = state => {
     return {
