@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
             );
     }
     
-    function RenderComments({com}){
+    function RenderComments({com, addComment, dishId}){
         if (com != null) {
             const cmt = com.map((cmts)=>{ 
                 const cmta = cmts.comment;
@@ -47,7 +47,7 @@ import { Link } from 'react-router-dom';
                             {cmt}
                         </div>
                         <div className="cmtform">
-                            <CommentForm />
+                            <CommentForm dishId={dishId} addComment={addComment}/>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,10 @@ import { Link } from 'react-router-dom';
                     <RenderDish dish = {props.dish} />
                   </div>
                   <div className="col-12 col-md-5 col-xl-5 m-1">
-                    <RenderComments com = {props.comments} />
+                    <RenderComments com = {props.comments} 
+                        addComment = {props.addComment}
+                        dishId ={props.dish.id}
+                    />
                   </div>
             </div>
         </div>
