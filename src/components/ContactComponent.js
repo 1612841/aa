@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react';
 import { Breadcrumb, BreadcrumbItem, Button, Label, Col, Row } from 'reactstrap';
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, Form, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length; //click vao roi nhac chuot ra thi val ="true", khi khi length = 0 thi val.length = false
 const maxLength = (len) => (val) => !(val) || (val.length <= len); //o day chi la 2 dieu kien, chu khong chon dieu kien
 const minLength = (len) => (val) => (val) && (val.length  >= len); //o day chi la 2 dieu kien, chu khong chon dieu kien
 const isNumber = (val) => !isNaN(Number(val));
-const validEmail = (val) => /^(A-Z0-9._%+-)+ @[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val); //ham i.test(val) => kiem tra nhap lieu da dung chua, neu sai pham vi quy dinh /..../ dang truoc se tra ve "!val" , neu dung la "val"
+const validEmail = (val) => /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/i.test(val); //ham i.test(val) => kiem tra nhap lieu da dung chua, neu sai pham vi quy dinh /..../ dang truoc se tra ve "!val" , neu dung la "val"
 class Contact extends Component {
 
     constructor(props) {
@@ -20,6 +20,7 @@ class Contact extends Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
+        this.props.resetFeedbackForm();
     }
     render(){
        return(
@@ -65,7 +66,7 @@ class Contact extends Component {
                       <h3>Send us your Feedback</h3>
                    </div>
                     <div className="col-12 col-md-9">
-                    <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                    <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
                     <Row className="form-group">
                         <Label htmlFor="firstname" md={2}>First Name</Label>
                         <Col md={10}>
@@ -150,8 +151,8 @@ class Contact extends Component {
                         <Col md={{size: 6, offset: 2}}>
                             <div className="form-check">
                                 <Label check>
-                                    <Control.checkbox model=".agree" name="agree"
-                                        className="form-check-input"
+                                    <Control.checkbox model=".agree" name="agree" 
+                                        className="form-check-input" checked={this.props.resetFeedbackForm.agree}
                                          /> {' '}
                                         <strong>May we contact you?</strong>
                                 </Label>
@@ -180,7 +181,7 @@ class Contact extends Component {
                             </Button>
                         </Col>
                     </Row>
-                </LocalForm>
+                </Form>
                     </div>
                </div>
             </div>

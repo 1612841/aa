@@ -2,9 +2,29 @@ import React from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem, Button } from 'reactstrap';
 import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
+import {Loading} from './LoadingComponent';
 
     function RenderDish({dish}) {
-        if (dish != null) {
+
+        if (dish.isLoading) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <Loading />
+                    </div>
+                </div>
+            );
+        }
+        else if (dish.errMess) {
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{dish.errMess}</h4>
+                    </div>
+                </div>
+            );
+        }
+        else if (dish != null) {
             return(
             <div className="row">
                 <Card>
