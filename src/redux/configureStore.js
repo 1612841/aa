@@ -17,7 +17,7 @@ export const ConfigureStore = () => {
             promotions: Promotions,
             leaders: Leaders,
             ...createForms({  //create-form để có thể giữ form ban đầu, khi nào cần reset thì sài action.reset('feedback'), còn bình thường sẽ nhận dữ liệu vào state
-                feedback: InitialFeedback
+                feedback: InitialFeedback  //model = " feedback" createForm tạo model=feedback cho form nào nhận reducer này
             })
         }),
         applyMiddleware(thunk, logger)
