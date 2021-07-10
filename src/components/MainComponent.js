@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators'; //Buoc 1: king se dispatch initial action la comments.js, va tra ve data tu comment.js
+import { postComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators'; //Buoc 1: king se dispatch initial action la comments.js, va tra ve data tu comment.js
 import { actions } from 'react-redux-form';
 
 const mapStateToProps = state => {  
@@ -22,7 +22,7 @@ const mapStateToProps = state => {
 }
 //Buoc 2: copy dispatch //gọi tới reducer
 const mapDispatchToProps = (dispatch) => ({
-    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment)),
     fetchDishes: () => {dispatch(fetchDishes())},
     resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}, // khi nao can reset lai thi sai
     fetchComments: () => dispatch(fetchComments()),
@@ -59,7 +59,7 @@ class Main extends Component {
             errMess = {this.props.dishes.errMess} 
             comments={this.props.comments.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
             commentsErrMess = {this.props.dishes.errMess} 
-            addComment={this.props.addComment}
+            postComment={this.props.postComment}
             />
             
             );

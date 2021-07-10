@@ -43,7 +43,7 @@ import {baseUrl} from '../shared/baseUrl';
             );
     }
     
-    function RenderComments({com, addComment, dishId}){
+    function RenderComments({com, postComment, dishId}){
         if (com != null) {
             const cmt = com.map((cmts)=>{ 
                 const cmta = cmts.comment;
@@ -68,7 +68,7 @@ import {baseUrl} from '../shared/baseUrl';
                             {cmt}
                         </div>
                         <div className="cmtform">
-                            <CommentForm dishId={dishId} addComment={addComment}/>
+                            <CommentForm dishId={dishId} postComment={postComment}/>
                         </div>
                     </div>
                 </div>
@@ -99,7 +99,7 @@ import {baseUrl} from '../shared/baseUrl';
                   </div>
                   <div className="col-12 col-md-5 col-xl-5 m-1">
                     <RenderComments com = {props.comments} 
-                        addComment = {props.addComment}
+                        postComment = {props.postComment}
                         dishId ={props.dish.id}
                     />
                   </div>
