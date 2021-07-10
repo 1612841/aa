@@ -4,6 +4,7 @@ import CommentForm from './CommentForm';
 import { Link } from 'react-router-dom';
 import {Loading} from './LoadingComponent';
 import {baseUrl} from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
     function RenderDish({dish}) {
 
@@ -28,6 +29,11 @@ import {baseUrl} from '../shared/baseUrl';
         else if (dish != null) {
             return(
             <div className="row">
+            <FadeTransform
+            in
+            transformProps={{
+                exitTransform: 'scale(0.5) translateY(-50%)'
+            }} >
                 <Card>
                     <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                     <CardBody>
@@ -35,6 +41,7 @@ import {baseUrl} from '../shared/baseUrl';
                         <CardText>{dish.description}</CardText>
                     </CardBody>
                </Card>
+               </FadeTransform>
             </div>
             );
              } else
@@ -42,24 +49,25 @@ import {baseUrl} from '../shared/baseUrl';
                 <div></div>
             );
     }
-    
+    /*  const cmta =new Date(cmts.date.slice(0,10)).toString().slice(4,10);
+                const cmtb =new Date(cmts.date.slice(0,10)).toString().slice(11,15); 
+                */
     function RenderComments({com, postComment, dishId}){
         if (com != null) {
-            const cmt = com.map((cmts)=>{ 
-                const cmta = cmts.comment;
-              /*  const cmta =new Date(cmts.date.slice(0,10)).toString().slice(4,10);
-                const cmtb =new Date(cmts.date.slice(0,10)).toString().slice(11,15); 
-                {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmts.date)))}*/
-                return(
-                    <div className="cmtgroupmap mt-4">
-                         <quote>{cmta}</quote>
-                         <div className="m-2">
-                            <cite>--  {cmts.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmts.date)))}</cite>
-                         </div>
-                    </div>
-                    
+             const cmt =
+            <Stagger in>
+            {com.map((cmt) => {
+                return (
+                    <Fade in>
+                    <li key={cmt.id} className="list-unstyled">
+                    <p>{cmt.comment}</p>
+                    <p>-- {cmt.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(cmt.date)))}</p>
+                    </li>
+                    </Fade>
                 );
-            })
+            })}
+            </Stagger>
+            
             return(
                 <div className="comments">
                     <div className="commentsgroup" >
